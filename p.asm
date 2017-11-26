@@ -1,88 +1,98 @@
 .586
-.MODEL FLAT 
+.MODEL FLAT
 INCLUDE io.h
 .STACK 4096
 .DATA
-cent DWORD ?
-nickels DWORD ?
-Dims DWORD ?
-quarter DWORD ?
-fifty DWORD ?
-dolar DWORD ?
+grade1 DWORD ?
+weight1 DWORD ?
+grade2 DWORD ?
+weight2 DWORD ?
+grade3 DWORD ?
+weight3 DWORD ?
+grade4 DWORD ?
+weight4 DWORD ?
+R1 DWORD ?
+R2 DWORD ?
+R3 DWORD ?
+R4 DWORD ?
 
-s1 BYTE " Enter cent " ,0
-s2 BYTE " Enter nickles " ,0
-s3 BYTE "Enter dimes ",0
-s4 BYTE "Enter quarter ",0
-s5 BYTE "Enter fifty-cent ",0
-s6 BYTE "Enter dolar ",0
-string BYTE 40 DUP(?) ,0
-t1 BYTE "The result = ",0
-res1 BYTE 11 DUP (?);0
-t2 BYTE "reminder ",0
-res2  BYTE 11 DUP (?)
-.CODE 
+x1 BYTE "Enter grade1 ",0
+y1 BYTE "Enter weight1" ,0
+x2 BYTE "Enter grade2 ",0
+y2 BYTE "Enter weight2 ",0
+x3 BYTE "Enter grade3 ",0
+y3 BYTE "Enter weight3 ",0
+x4 BYTE "Enter grade4 ",0
+y4 BYTE "Enter weight4",0
+string BYTE 40 DUP(?),0
+str1 BYTE "weightedsum equal ",0
+res1 BYTE 11 DUP(?),0
+str2 BYTE "sum of weight ",0
+res2 BYTE 11 DUP(?),0
+str3 BYTE "averag equal ",0
+res3 BYTE 11 DUP(?)
+
+.CODE
 MainProc PROC
-input s1,string ,40
+input x1,string ,40
 atod string 
-mov cent,eax
-input s2,string ,40
+mov grade1 ,eax
+input y1 ,string, 40
 atod string 
-mov nickels,eax
-input s3,string ,40
+mov weight1 ,eax
+input x2,string ,40
 atod string 
-mov Dims,eax
-input s4,string ,40
-atod string 
-mov quarter,eax
-input s5,string ,40
-atod string 
-mov fifty,eax
-input s6 ,string ,40
-atod string 
-mov dolar ,eax
- mov eax,cent
-  
- mov eax, nickels
- imul eax,5
- mov nickels,eax
+ mov grade2,eax
+ input y2,string ,40
+ atod string
+ mov weight2 ,eax
+ input x3,string ,40
+ atod string 
+ mov grade3,eax
+ input y3,string ,40
+ atod string 
+ mov weight3,eax
+input x4,string ,40
+atod string
+mov grade4,eax
+input y4,string ,40
+atod string
+mov weight4 ,eax
+mov eax,grade1
+imul eax,weight1
+mov R1 ,eax
+mov eax,grade2
+imul eax,weight2
+mov R2,eax
+mov eax,grade3
+imul eax,weight3
+mov R3,eax
+mov eax,grade4
+imul eax,weight4
+mov R4,eax
+mov eax,R1
+add eax,R2
+add eax,R3
+add eax,R4
+mov ebx,eax
+dtoa res1,eax
+output str1,res1
 
-mov eax,Dims
-imul eax,10
-mov Dims,eax
+mov eax,weight1
+add eax,weight2
+add eax,weight3
+add eax,weight4
+dtoa res2,eax
+output str2,res2
 
-mov eax,quarter
-imul eax,25
-mov quarter,eax
 
-mov eax,fifty
-imul eax,50
-mov fifty,eax 
-
-mov eax,dolar 
-imul eax,100
-;mov dolar,eax
-
-add eax,nickels
-add eax,dims
-add eax,quarter 
-add eax, fifty
-add eax,cent 
-mov ebx,100
+atod res2
+xchg eax,ebx
 cdq
-idiv ebx
-dtoa string ,eax
-output t1, string
- 
-dtoa res2,edx
-output t2,res2
-
+div ebx
+dtoa res3,eax
+output str3,res3
 mov eax,0
- ret
- MainProc ENDP
+ret
+MainProc ENDP
 END
-
-
-
-
-
