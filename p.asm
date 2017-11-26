@@ -1,41 +1,37 @@
 .586
-.MODEL FLAT
+.MODEL FLAT 
 INCLUDE io.h
 .STACK 4096
 .DATA
-x DWORD ?
-y DWORD ?
-z DWORD ?
-w DWORD ?
-s1 BYTE "Enter first value ",0
-s2 BYTE "Enter second value ",0
-s3 BYTE "Enter three value ",0
-string BYTE 40 DUP(?)
-te BYTE "the result equal ",0
-res BYTE 11 DUP(?),0
-.CODE
+X DWORD ?
+Y DWORD ?
+Z DWORD ?
+W DWORD ?
+S1 BYTE "ENTER FIRST NUM ",0
+S2 BYTE "ENTER SECOND  NUM ",0
+S3 BYTE "ENTER THREE NUM ", 0
+string BYTE 40 dup (?)
+te BYTE " the result is ",0
+res BYTE 11 DUP (?) 
+.CODE 
 MainProc PROC
-input s1,string ,40
+input S1 ,string ,40
 atod string 
-mov x,eax
-input s2,string ,40
- atod string 
- mov y,eax
- input s3,string ,40
- atod string 
- mov z,eax
- imul eax,2
- mov w,eax
- mov eax,x
- add eax,y
- sub eax,w
- inc eax
- neg eax
- dtoa res,eax
- output te ,res
- mov eax,0
- ret
- MainProc ENDP
- END
-
-
+mov X, eax 
+input S2, string ,40
+atod string 
+mov Y ,eax
+input S3,string ,40
+atod string 
+mov Z,eax
+mov eax ,X
+add eax,Y
+mov W,eax
+imul eax,2
+add eax,Z
+dtoa res,eax
+output te,res
+mov eax,0
+ret
+MainProc ENDP
+END
